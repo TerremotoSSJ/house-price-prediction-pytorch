@@ -1,3 +1,4 @@
+import os
 import torch
 import pandas as pd
 from torch.utils.data import Dataset
@@ -19,10 +20,15 @@ We will handle them by imputing with the median of the column.
 class housingDataset(Dataset):
     def __init__(self):
         super().__init__()
-        data=pd.read_csv("githubpro/data/housing.csv") #read csv
+        # Get the current directory of this file
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        # Walking up to the project root directory
+        project_root = os.path.dirname(current_dir)
+        csv_path = os.path.join(project_root, "data", "housing.csv")
+        data=pd.read_csv(csv_path) #read csv
         #handle missing values by imputing with median
         median_bedrooms = data['total_bedrooms'].median()
-        data['total_bedrooms'].fillna(median_bedrooms, inplace=True)
+        data['total_bedrooms'] = data['total_bedrooms'].fillna(median_bedrooms)
         #first we have to convert categorical data to numerical data
         data=pd.get_dummies(data, columns=['ocean_proximity']) #one hot encoding
         features_raw=data.drop('median_house_value', axis=1).values
