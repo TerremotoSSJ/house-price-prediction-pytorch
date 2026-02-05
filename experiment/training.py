@@ -27,9 +27,19 @@ val_size=int(0.1*len(dataset)) #10% for validation
 test_size=len(dataset)-train_size-val_size #20% for testing
 dataset_train, dataset_val, dataset_test=random_split(dataset, [train_size, val_size, test_size]) #split dataset
 #Create data loaders
-dataloader_train=DataLoader(dataset_train, batch_size=32, shuffle=True) #training data loader
-dataloader_val=DataLoader(dataset_val, batch_size=32, shuffle=False) #validation data loader
-dataloader_test=DataLoader(dataset_test, batch_size=32, shuffle=False) #test data loader
+if(device.type=='cuda'):  #use larger batch size for gpu
+    batch_size=256 #larger batch size for gpu
+    pin_memory=True #pin memory for gpu
+    num_workers=4 #use multiple workers for data loading
+else:
+    batch_size=64 #smaller batch size for cpu
+    pin_memory=False #no pin memory for cpu
+    num_workers=0 #single worker for data loading
+#Creating data loaders
+dataloader_train=DataLoader(dataset_train, batch_size=batch_size, shuffle=True, pin_memory=pin_memory,num_workers=num_workers) #training data loader
+dataloader_val=DataLoader(dataset_val, batch_size=batch_size, shuffle=False, pin_memory=pin_memory,num_workers=num_workers) #validation data loader
+dataloader_test=DataLoader(dataset_test, batch_size=batch_size, shuffle=False, pin_memory=pin_memory,num_workers=num_workers) #test data loader
+
 #Create model instance
 input_size=dataset.features.shape[1] #number of features
 model=HousingModel(input_size=input_size,base_neurons=64) #create model
@@ -40,4 +50,8 @@ criterion=torch.nn.MSELoss() #define loss function
 model, train_loss_history, val_loss_history=train_model(model, dataloader_train, dataloader_val, criterion=criterion, optimizer=optimizer, device=device, epochs=100) #train model
 #Evaluate model on test set
 test_loss=evaluation_model(model, dataloader_test, device=device) #evaluate model
-print(f"Test Loss: {test_loss}")
+print(f"Test Loss: {test_loss}") 
+
+if(input("Do you want to save the model? (y/n): ").lower()=="y"): #ask user if they want to save the model:
+        name=input("Name of the model to save (without extension): ") #ask user for model name
+        model.save(name)  #save the trained model

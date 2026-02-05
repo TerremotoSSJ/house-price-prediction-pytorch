@@ -3,29 +3,29 @@
 
 This project implements a neural network for predicting California housing prices using the "California Housing Prices" dataset from Kaggle. The model incorporates Dropout Regularization techniques to prevent overfitting and improve generalization.
 
-Used Dataset: https://www.kaggle.com/datasets/camnugent/california-housing-prices
+**Used Dataset**: https://www.kaggle.com/datasets/camnugent/california-housing-prices
 
 ## Features:
 
-Neural Network Architecture: Multi-layer perceptron with dropout layers
+**Neural Network Architecture**: Multi-layer perceptron with dropout layers
 
-Regularization: Dropout technique to prevent overfitting
+**Regularization**: Dropout technique to prevent overfitting
 
-Data Preprocessing: One-hot encoding, standardization, and missing value handling
+**Data Preprocessing**: One-hot encoding, standardization, and missing value handling
 
-Training Pipeline: Complete training and evaluation workflow
+**Training Pipeline**: Complete training and evaluation workflow
 
-Model Persistence: Save and load trained models for inference
+**Model Persistence**: Save and load trained models for inference and testing
 
 ## Dataset
 
-Source: California Housing Prices on Kaggle
+**Source**: California Housing Prices on Kaggle
 
-Features: 9 attributes including geographical, demographic, and housing characteristics
+**Features**: 9 attributes including geographical, demographic, and housing characteristics
 
-Target: Median house value for California districts
+**Target**: Median house value for California districts
 
-Samples: 20,640 entries
+**Samples**: 20,640 entries
 
 ## Installation
 
@@ -37,7 +37,7 @@ Samples: 20,640 entries
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/yourusername/california-housing-prediction.git
+git clone https://github.com/TerremotoSSJ/house-price-prediction-pytorch.git
 cd california-housing-prediction
 ```
 
@@ -62,6 +62,7 @@ python -c "import sklearn; print(f'Scikit-learn version: {sklearn.__version__}')
 ```
 
 ## Structure
+```bash
 project/
 ├── data/              # Datasets
 ├── src/               # 
@@ -71,4 +72,11 @@ project/
 │   └── train.py       # Training
 ├── experiments/       # test scripts
 ├── requirements.txt  # Dependecies
+├── models/           # Save models
+│   ├── Default.pth   # Default model
+│   .
+│   .                 #Save all the models is needed want to save
+│   .
+│   └── LastModel.pth 
 └── README.md        # Documentation
+```

@@ -37,6 +37,9 @@ class housingDataset(Dataset):
         return len(self.features)
     def __getitem__(self, idx):
         return self.features[idx], self.labels[idx] #return features and labels as a tuple for efficiency
+    def random_values(self):
+        idx=torch.randint(0, len(self.features), (1,)).item() #random index
+        return self.features[idx], self.labels[idx] #return features and labels as a tuple for efficiency
 
 
         
